@@ -1,0 +1,7 @@
+----------------------------------------
+ TO BUILD THE EXECUTABLE FILE "circut"
+----------------------------------------
+
+1) Type "make" (without quotes) at the system prompt.
+2) Type "make clean" to clean up the directory.
+3) You may change the compiler options in Makefile.

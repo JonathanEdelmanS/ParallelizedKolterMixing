@@ -1,0 +1,31 @@
+Essential Information:
+--------------------------------------------------
+1) The input file (or graph) has the form:
+         n   m          (i.e.,  |V|, |E|)
+         i   j   wij    (for all ij in E)
+
+2) The 1st line in the file param.file specifies 
+   the actual parameter file to be used.
+
+3) The file param.default contains the default
+   parameter values.
+
+4) To get better solutions, increase the values
+   of the parameters: nperb and multi.
+
+To run CirCut on UNIX systems:
+--------------------------------------------------
+1) To run the program "circut", type: circut and
+   when prompted, enter a data file name (say, G48).
+   After it's run, enter another file name to continue,
+   or enter RETURN to end the run. 
+
+2) To run the 6 Gset problems in this directory,
+   type: "circut < test.gset" (without quotes).
+
+3) To run the 2 torus problems in this directory,
+   type: "circut < test.torus" (without quotes).
+
+4) To run on background and direct output to the file, 
+   say, outfile, type: "circut < test.torus > outfile &" 
+   (without quotes).
