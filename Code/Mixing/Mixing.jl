@@ -5,7 +5,7 @@ begin
 
 	BenchmarkTools.DEFAULT_PARAMETERS.seconds = 15.0
 end
-export randserial, randparallel, JuMPspeed, JuMPspeedn
+export randserial, randparallel, JuMPspeed, JuMPspeedn, assign100
 begin
     n=200
     k=9
@@ -18,22 +18,22 @@ function Cn(n)
 end
 begin
 	function randserial(n,k,C,ϵ=1e-7)
-	    Costs = []
+	  #  Costs = []
 	    V=rand(k,n)
-	    counter=0
-	    Vs = []
+	  #  counter=0
+	  #  Vs = []
 	    for i in 1:n
 	        V[:,i] = mix(i,V,C)
 	    end
 	    for j=1:n*k*2*4
 	            i=rand(1:n)
 	            V[:,i] = mix(i,V,C)
-	  #      push!(Costs,tr(V* C* V'))
-	  #      push!(Vs, V'*V)
+	      #  push!(Costs,tr(V* C* V'))
+	      #  push!(Vs, V'*V)
 	    end
-	  tr(V*C*V')
+        return V
+	 # tr(V*C*V')
 	  #  Vs
-	  #  Costs
 	  #  print(Costs[end])
 	  #  plot(Costs)
 	end
@@ -75,10 +75,25 @@ begin
 		print(tr(V*C*V'))
 	end
 	function mix(i,V,C)
-			ans=-(V*C[i,:])
-			ans/=norm(ans)
-			return ans
+        ans=-(V*C[i,:])
+        ans/=norm(ans)
+	    return ans
 	end
+end
+
+function assign(V,C)
+    k = length(V[:,1])
+    r = rand(k)
+    r/=norm(r)
+    assignments = sign.(r' * V)
+    .5 * sum(C[i,j] * (1-assignments[i] * assignments[j])/2 for i in 1:length(V[1,:]) for j in 1:length(V[1,:]))
+end
+function assign100(V,C)
+    assignments = []
+    for i in 1:100
+        push!(assignments, assign(V,C))
+    end
+    return assignments
 end
 
 begin
