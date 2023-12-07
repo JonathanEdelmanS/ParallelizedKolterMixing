@@ -155,9 +155,20 @@ CONTAINS
 !-----------------------------------------------!
   SUBROUTINE get_random(t)
      REAL(wp), INTENT(INOUT) :: t(:)
-     INTEGER  :: time(1)
-     CALL SYSTEM_CLOCK( time(1) )
-     CALL RANDOM_SEED( PUT=time )
+
+     INTEGER :: i, n, clock
+     INTEGER, DIMENSION(:), ALLOCATABLE :: seed
+          
+     CALL RANDOM_SEED(size = n)
+     ALLOCATE(seed(n))
+          
+     CALL SYSTEM_CLOCK(COUNT=clock)
+          
+     seed = clock + 37 * (/ (i - 1, i = 1, n) /)
+     CALL RANDOM_SEED(PUT = seed)
+          
+     DEALLOCATE(seed)
+
      CALL RANDOM_NUMBER( t )
   END SUBROUTINE
 
