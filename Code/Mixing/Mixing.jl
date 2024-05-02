@@ -17,8 +17,8 @@ function Cn(n)
     return (c  - I + abs.(c-I))/2 
 end
 begin
-	function randserial(n,k,C,ϵ=1e-7)
-	  #  Costs = []
+	function randserial(n,k,C,ϵ=1e-7, returnCosts=false)
+	  Costs = []
 	    V=rand(k,n)
 	  #  counter=0
 	  #  Vs = []
@@ -28,9 +28,18 @@ begin
 	    for j=1:n*k*2*4
 	            i=rand(1:n)
 	            V[:,i] = mix(i,V,C)
-	      #  push!(Costs,tr(V* C* V'))
+				if returnCosts
+					 push!(Costs,tr(V* C* V'))
+					 if length(Costs) > 10 && abs(Costs[end] - Costs[end-10]) < ϵ
+						return V,Costs
+					 end
+				end
 	      #  push!(Vs, V'*V)
 	    end
+		if returnCosts
+			return V, Costs
+		end
+		
         return V
 	 # tr(V*C*V')
 	  #  Vs
@@ -38,10 +47,10 @@ begin
 	  #  plot(Costs)
 	end
 	function randparallel(n,k,C,ϵ=1e-7)
-	    Costs = []
+	   # Costs = []
 	    V=rand(k,n)
-	    counter=0
-	    Vs = []
+	   # counter=0
+	   # Vs = []
 	
 	    for i in 1:n
 	        V[:,i] = mix(i,V,C)
@@ -58,7 +67,8 @@ begin
 	#    Vs
 	#    Costs
 	#    print(Costs[end])
-	tr(V*C*V')
+	#tr(V*C*V')
+		return V
 	end
 	function randGPU(n,k,C,ϵ=1e-7)
 		Costs = []
