@@ -1,7 +1,7 @@
 module Mixing
 begin
     #Load in Packages
-	using BenchmarkTools, Statistics, LinearAlgebra, Random, JuMP, SCS, SparseArrays, Plots, CUDA
+	using BenchmarkTools, Statistics, LinearAlgebra, Random, JuMP, SCS, SparseArrays#, Plots #, CUDA
 
 	BenchmarkTools.DEFAULT_PARAMETERS.seconds = 15.0
 end
