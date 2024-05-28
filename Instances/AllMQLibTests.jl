@@ -30,6 +30,25 @@ function testpipeline(testinput)
 
 end
 
+function MQLibpipelin(testinput)
+
+    testmat = matrixFromFile(testinput)
+    sparsetestmat=sparse(testmat)
+
+    model = Model(MQLib.Optimizer)
+    JuMP.set_optimizer_attribute(model, "heuristic", "ALKHAMIS1998")
+
+    n,m = size(testmat)
+
+    @variable(model, x[1:n], Bin)
+    @objective(model, Min, 4 * (x.- 0.5)' * sparsetestmat *(x.- 0.5))
+
+    time = @timed  optimize!(model)
+
+    return time.time, objective_value(model)
+end
+
+
 
 function MQLibpipelin(testinput)
 
