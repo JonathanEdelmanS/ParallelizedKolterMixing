@@ -27,7 +27,7 @@ end
 function testpipeline(testinput)
     testmat = matrixFromFile(testinput)
     sparsetestmat=sparse(testmat)
-    (V, t) = @timed Mixing.randserial(length(sparsetestmat[1,:]), 30, sparsetestmat)
+    (V, t) = @timed Mixing.randserial(length(sparsetestmat[1,:]), 20, sparsetestmat)
     Cost = tr(V* testmat* V')
     return((t,V))
 
