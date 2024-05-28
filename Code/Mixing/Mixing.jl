@@ -95,8 +95,8 @@ function assign(V,C)
     k = length(V[:,1])
     r = rand(k)
     r/=norm(r)
-    assignments = sign.(r' * V)
-    .5 * sum(C[i,j] * (1-assignments[i] * assignments[j])/2 for i in 1:length(V[1,:]) for j in 1:length(V[1,:]))
+    assignments = (sign.(r' * V).+1)./2
+	return (assignments * C * assignments')[1]
 end
 function assign100(V,C)
     assignments = []
